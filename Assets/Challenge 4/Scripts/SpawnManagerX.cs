@@ -11,16 +11,15 @@ public class SpawnManagerX : MonoBehaviour
     private float spawnZMin = 15; // set min spawn Z
     private float spawnZMax = 25; // set max spawn Z
 
-    public int enemyCount;
+    public int enemyCount; 
     public int waveCount = 1;
-
-
+    
     public GameObject player; 
 
     // Update is called once per frame
     void Update()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         if (enemyCount == 0)
         {
