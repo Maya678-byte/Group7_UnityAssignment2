@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManagerX : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefab;
     public GameObject powerupPrefab;
 
     private float spawnRangeX = 10;
@@ -13,7 +13,7 @@ public class SpawnManagerX : MonoBehaviour
 
     public int enemyCount; 
     public int waveCount = 1;
-    public float enemySpeed;
+    public float enemySpeed = 25;
 
     public GameObject player; 
 
@@ -50,10 +50,47 @@ public class SpawnManagerX : MonoBehaviour
         }
 
         // Spawn number of enemy balls based on wave number
+        //for (int i = 0; i < enemiesToSpawn; i++)
+        //{
+        //    Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+        //}
+
+        //for (int i = 0; i < enemiesToSpawn; i++)
+        //{
+        //    int randomEnemy = Random.Range(0, enemyPrefab.Length);
+        //    Instantiate(enemyPrefab[randomEnemy], GenerateSpawnPosition(),
+        //    enemyPrefab[randomEnemy].transform.rotation);
+        //}
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            int enemyIndex;
+
+            // First enemy in every wave is always normal
+            if (i == 0)
+            {
+                enemyIndex = 0;  // normal enemy
+            }
+            else
+            {
+                // After the first one → mostly normal, some fast
+                if (Random.value < 0.8f)
+                {
+                    enemyIndex = 0;  // normal
+                }
+                else
+                {
+                    enemyIndex = 1;  // fast
+                }
+            }
+
+            Instantiate(
+                enemyPrefab[enemyIndex],
+                GenerateSpawnPosition(),
+                enemyPrefab[enemyIndex].transform.rotation
+            );
         }
+
+
 
         waveCount++;
         enemySpeed= waveCount*25;
