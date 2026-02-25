@@ -339,6 +339,7 @@ MonoBehaviour:
   enemyPrefab:
   - {fileID: 8932280921958007952, guid: 47045ccb8f3944b9b8a55f6b07f0aefc, type: 3}
   - {fileID: 8932280921958007952, guid: 83018d80d3c5b524e8ce901079ae30a8, type: 3}
+  - {fileID: 8932280921958007952, guid: e91434bb69642764ca826c40465af1a4, type: 3}
   powerupPrefab: {fileID: 4446131693967519089, guid: c5497424856514b2ba61b78375567988, type: 3}
   enemyCount: 0
   waveCount: 1

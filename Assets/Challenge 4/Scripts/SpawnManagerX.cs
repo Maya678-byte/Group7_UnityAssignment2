@@ -65,22 +65,14 @@ public class SpawnManagerX : MonoBehaviour
         {
             int enemyIndex;
 
-            // First enemy in every wave is always normal
             if (i == 0)
             {
-                enemyIndex = 0;  // normal enemy
+                // Always spawn one normal enemy
+                enemyIndex = 0;
             }
             else
             {
-                // After the first one → mostly normal, some fast
-                if (Random.value < 0.8f)
-                {
-                    enemyIndex = 0;  // normal
-                }
-                else
-                {
-                    enemyIndex = 1;  // fast
-                }
+                enemyIndex = Random.Range(0, enemyPrefab.Length);
             }
 
             Instantiate(
