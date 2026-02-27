@@ -1,0 +1,112 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class AudioSingleton : MonoBehaviour
+{
+    
+    public static AudioSingleton Instance { get; private set; } 
+    public float volume;
+
+    public AudioSource jump;
+    public AudioSource pause;
+    public AudioSource unpause;
+    public AudioSource win;
+    public AudioSource coin;
+
+
+
+    public AudioSource button;
+
+    public AudioSource menu;
+    public AudioSource wood;
+    public AudioSource cave;
+    public AudioSource snow;
+    private void Awake()
+    {
+        volume = 0.5f;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject); // Destroy duplicate instances
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+
+        Instance = this; // Set the instance to this object
+    }
+
+    public void ChangeVolume(Slider slider)
+    {
+        volume = slider.value;
+        jump.volume = volume;
+        
+        coin.volume = volume;
+        win.volume = volume;
+        pause.volume = volume;
+        unpause.volume = volume;
+        button.volume = volume;
+        menu.volume = volume;
+        wood.volume = volume;
+        cave.volume = volume;
+        snow.volume = volume;
+    }
+
+    
+
+    public void PlayJump()
+    {
+        jump.volume = volume;
+        jump.Play();
+    }
+    
+    public void PlayCoin()
+    {
+        coin.volume = volume;
+        coin.Play();
+    }
+
+    public void PlayWin()
+    {
+        win.volume = volume;
+        win.Play();
+    }
+
+    public void PlayPause()
+    {
+        pause.volume = volume;
+        pause.Play();
+    }
+    public void PlayUnPause()
+    {
+        unpause.volume = volume;
+        unpause.Play();
+    }
+
+    public void PlayButton()
+    {
+        button.volume = volume;
+        button.Play();
+    }
+
+    public void PlayMenu()
+    {
+        menu.volume = volume;
+        menu.loop = true;
+        menu.Play();
+    }
+
+    public void PlayWood()
+    {
+        wood.volume = volume;
+        wood.loop = true;
+        wood.Play();
+    }
+
+
+    public void PauseMusic()
+    {
+        snow.Stop();
+        wood.Stop();
+        cave.Stop();
+        menu.Stop();
+    }
+}
