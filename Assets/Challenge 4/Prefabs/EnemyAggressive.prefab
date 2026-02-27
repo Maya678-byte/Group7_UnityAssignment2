@@ -154,5 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 25
-  speedMultiplier: 1
+  speedMultiplier: 0.5
+  defendDistanceFromGoal: 5
   behaviorType: 1

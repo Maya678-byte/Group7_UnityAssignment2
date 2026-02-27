@@ -155,3 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 25
   speedMultiplier: 2
+  defendDistanceFromGoal: 3
+  evasiveRadius: 6
+  evasiveFleeMultiplier: 2
+  behaviorType: 0
