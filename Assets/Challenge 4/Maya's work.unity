@@ -343,6 +343,8 @@ MonoBehaviour:
   - {fileID: 8932280921958007952, guid: 43dcae85f54db8f458e27b4950260110, type: 3}
   - {fileID: 8932280921958007952, guid: 939d3f300b2afca448d8bf7bf85dce7c, type: 3}
   powerupPrefab: {fileID: 4446131693967519089, guid: c5497424856514b2ba61b78375567988, type: 3}
+  bossPrefab: {fileID: 8932280921958007952, guid: 34b3f93208583a2478384e931b5f0202, type: 3}
+  bossWaveInterval: 3
   enemyCount: 0
   waveCount: 0
   enemySpeed: 50
