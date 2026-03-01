@@ -13,3 +13,16 @@ Branch format:
 -Extra branch: Contains draft work of level setting, powerups, and main and customization menu
 
 -Test branch: Has the final complete game before merging
+
+Major Commits:
+Enemies: Evasive, Aggressive, ZigZag, Boss
+
+Powerups: Slow Time and Speed Boost
+
+Material Assets
+
+Completing the 7 Challenges
+
+Costumization menu, Main menu
+
+Adding sound effects and background music
