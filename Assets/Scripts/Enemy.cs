@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
         Normal,
         Evasive,
         Aggressive,
+        ZigZag,
         Done
     }
 
@@ -31,7 +32,10 @@ public class Enemy : MonoBehaviour
     private float lastAggressiveChargeTime = -99f;
 
     public float aggressiveKnockbackForce = 25f;  
-    public float aggressiveUpwardForce = 5f;      
+    public float aggressiveUpwardForce = 5f;
+
+    public float zigZagFrequency = 3f;   
+    public float zigZagAmplitude = 0.7f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -101,6 +105,10 @@ public class Enemy : MonoBehaviour
 
             case EnemyType.Aggressive:
                 DoAggressive();
+                break;
+
+            case EnemyType.ZigZag:     
+                DoZigZag();
                 break;
         }
     }
@@ -183,6 +191,31 @@ public class Enemy : MonoBehaviour
 
         rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
     }
+
+    void DoZigZag()
+    {
+        rb.linearDamping = moveDrag;
+
+        Vector3 toGoal = (goal.position - transform.position);
+        toGoal.y = 0f;
+
+        //float distToGoal = toGoal.magnitude;
+        //if (distToGoal <= goalReachDistance)
+        //{
+        //    rb.linearVelocity = Vector3.zero;
+        //    return;
+        //}    
+        Vector3 forwardDir = toGoal.normalized;
+
+        Vector3 rightDir = new Vector3(forwardDir.z, 0f, -forwardDir.x);
+        
+        float offset = Mathf.Sin(Time.time * zigZagFrequency) * zigZagAmplitude;
+       
+        Vector3 finalDir = (forwardDir + rightDir * offset).normalized;
+
+        Vector3 targetVel = finalDir * moveSpeed;
+        rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
+    }
     public void ApplyKnockback(Vector3 force, float duration)
     {
         
@@ -207,13 +240,13 @@ public class Enemy : MonoBehaviour
 
             if (playerRb != null)
             {
-                // Direction from enemy to player
+                
                 Vector3 knockDir = other.transform.position - transform.position;
                 knockDir.y = 0f;
                 knockDir.Normalize();
 
-                float aggressiveKnockbackForce = 50f;  // adjust strength
-                float aggressiveUpwardForce = 10f;      // small pop upward
+                float aggressiveKnockbackForce = 50f;  
+                float aggressiveUpwardForce = 10f;      
 
                 Vector3 knockForce =
                     knockDir * aggressiveKnockbackForce +

@@ -1165,9 +1165,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   enemies:
-  - {fileID: 683413156391347124, guid: 6855e18bc9b59c049b11aee8e90bca40, type: 3}
+  - {fileID: 3259935926243270280, guid: 2474aedd0a6ea3244a43bec05521bb06, type: 3}
   - {fileID: 5062925946185521644, guid: 357395dcfb9ba2d4f88822f4615dc337, type: 3}
   - {fileID: 4568759483090526596, guid: 0afc9cd5bf0bfbb4cbce0b88f38f4b68, type: 3}
+  - {fileID: 3259935926243270280, guid: 2474aedd0a6ea3244a43bec05521bb06, type: 3}
 --- !u!4 &205374885
 Transform:
   m_ObjectHideFlags: 0
