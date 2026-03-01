@@ -24,11 +24,6 @@ public class Enemy : MonoBehaviour
 
     public float detectRange = 8f;
     public float goalReachDistance = 1f;
-
-    public float aggressiveChargeRange = 8f;      
-    public float aggressiveChargeImpulse = 35f;   
-    public float aggressiveChargeCooldown = 2f;   
-    private float lastAggressiveChargeTime = -99f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -156,8 +151,6 @@ public class Enemy : MonoBehaviour
         Vector3 toPlayer = (player.position - transform.position);
         toPlayer.y = 0f;
 
-        float distanceToPlayer = toPlayer.magnitude;
-
         if (toPlayer.magnitude < 0.5f)
         {
             rb.linearVelocity = Vector3.zero;
@@ -165,17 +158,6 @@ public class Enemy : MonoBehaviour
         }
 
         toPlayer.Normalize();
-
-        bool canCharge = Time.time > lastAggressiveChargeTime + aggressiveChargeCooldown;
-
-        if (distanceToPlayer < aggressiveChargeRange && canCharge)
-        {
-            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
-            rb.AddForce(toPlayer * aggressiveChargeImpulse, ForceMode.Impulse);
-            lastAggressiveChargeTime = Time.time;
-
-            return; 
-        }
         Vector3 targetVel = toPlayer * moveSpeed * 1.2f;
 
         rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
