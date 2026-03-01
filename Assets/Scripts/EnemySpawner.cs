@@ -25,12 +25,12 @@ public class EnemySpawner : MonoBehaviour
             for (int i = 0; i < ValueSingleton.Instance.wave - 1; i++)
             {
                 int k = Random.Range(0, enemies.Length - 1);
-                Vector3 randomPos = new Vector3(Random.Range(60f, 75f), 6f, Random.Range(11f, 20f));
+                Vector3 randomPos = new Vector3(Random.Range(60f, 75f), 6f, Random.Range(13f, 20f));
                 GameObject obj = Instantiate(enemies[k],randomPos,Quaternion.identity);
                 obj.GetComponent<Enemy>().isPoint = true;
             }
             
-            Vector3 r = new Vector3(Random.Range(60f, 75f), 6f, Random.Range(11f, 20f));
+            Vector3 r = new Vector3(Random.Range(60f, 75f), 6f, Random.Range(31f, 20f));
             GameObject o = Instantiate(enemies[4],r,Quaternion.identity);
             o.GetComponent<Enemy>().isPoint = true;
         }
@@ -39,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
             for (int i = 0; i < ValueSingleton.Instance.wave; i++)
             {
                 int k = Random.Range(0, enemies.Length - 1);
-                Vector3 randomPos = new Vector3(Random.Range(60f, 75f), 6f, Random.Range(11f, 20f));
+                Vector3 randomPos = new Vector3(Random.Range(60f, 75f), 6f, Random.Range(13f, 20f));
                 GameObject obj = Instantiate(enemies[k],randomPos,Quaternion.identity);
                 obj.GetComponent<Enemy>().isPoint = true;
             }
