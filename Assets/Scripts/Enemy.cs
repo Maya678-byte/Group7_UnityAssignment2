@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class Enemy : MonoBehaviour
         Normal,
         Evasive,
         Aggressive,
+        Boss,
         Done
     }
 
@@ -24,11 +26,17 @@ public class Enemy : MonoBehaviour
 
     public float detectRange = 8f;
     public float goalReachDistance = 1f;
+    public bool isPoint;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         goal = Goal.Instance.transform;
         player = PlayerMovement.Instance.transform;
+
+        if (enemyType == EnemyType.Boss)
+        {
+            StartCoroutine(SpawnMinions());
+        }
     }
 
     void FixedUpdate()
@@ -48,7 +56,11 @@ public class Enemy : MonoBehaviour
         foreach (Collider hit in hits)
         {
             enemyType = EnemyType.Done;
-            ValueSingleton.Instance.ballsOut += 1;
+            
+            if (isPoint)
+            {
+                ValueSingleton.Instance.ballsOut += 1;
+            }
         }
         
         Collider[] s = Physics.OverlapSphere(transform.position, 1f, LayerMask.GetMask("Goal"));
@@ -57,7 +69,11 @@ public class Enemy : MonoBehaviour
         {
             enemyType = EnemyType.Done;
             ValueSingleton.Instance.health -= 1;
-            ValueSingleton.Instance.ballsOut += 1;
+
+            if (isPoint)
+            {
+                ValueSingleton.Instance.ballsOut += 1;
+            }
         }
 
         if (ValueSingleton.Instance.isSlow)
@@ -93,6 +109,9 @@ public class Enemy : MonoBehaviour
 
             case EnemyType.Aggressive:
                 DoAggressive();
+                break;
+            case EnemyType.Boss:
+                DoBoss();
                 break;
         }
     }
@@ -162,6 +181,68 @@ public class Enemy : MonoBehaviour
 
         rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
     }
+    
+    
+    void DoBoss()
+    {
+        rb.linearDamping = moveDrag;
+
+        Vector3 toGoal = (goal.position - transform.position);
+        toGoal.y = 0f;
+
+        if (toGoal.magnitude <= goalReachDistance)
+        {
+            rb.linearVelocity = Vector3.zero;
+            return;
+        }
+
+        toGoal.Normalize();
+        Vector3 targetVel = toGoal * moveSpeed;
+
+        rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
+    }
+
+    IEnumerator SpawnMinions()
+    {
+        while (enemyType != EnemyType.Done)
+        {
+            yield return new WaitForSeconds(5f);
+
+            int k = Random.Range(0, EnemySpawner.Instance.enemies.Length - 1);
+            int dir = Random.Range(0, 4);
+
+            Vector3 spawnOffset = Vector3.zero;
+
+            switch (dir)
+            {
+                case 0:
+                    spawnOffset = transform.forward;
+                    break;
+                case 1:
+                    spawnOffset = -transform.forward;
+                    break;
+                case 2:
+                    spawnOffset = transform.right;
+                    break;
+                case 3:
+                    spawnOffset = -transform.right;
+                    break;
+            }
+
+            float distance = 2f;
+            Vector3 spawnPosition = transform.position + spawnOffset * distance;
+
+            GameObject obj = Instantiate(
+                EnemySpawner.Instance.enemies[k],
+                spawnPosition,
+                Quaternion.identity
+            );
+
+            obj.GetComponent<Enemy>().isPoint = false;
+        }
+    }
+    
+    
     public void ApplyKnockback(Vector3 force, float duration)
     {
         if (rb == null) return;
