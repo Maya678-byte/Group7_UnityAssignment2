@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
             }
             
             Vector3 r = new Vector3(Random.Range(60f, 75f), 6f, Random.Range(11f, 20f));
-            GameObject o = Instantiate(enemies[3],r,Quaternion.identity);
+            GameObject o = Instantiate(enemies[4],r,Quaternion.identity);
             o.GetComponent<Enemy>().isPoint = true;
         }
         else

@@ -50,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)

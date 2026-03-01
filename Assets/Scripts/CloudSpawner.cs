@@ -15,7 +15,7 @@ public class CloudSpawner : MonoBehaviour
 
     IEnumerator spawn()
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSecondsRealtime(8);
         GameObject obj = Instantiate(cloud,new Vector3(Random.Range(end.position.x,start.position.x),Random.Range(29.1f,33.1f),start.position.z), Quaternion.Euler(-90,0,0));
         StartCoroutine(spawn());
     }

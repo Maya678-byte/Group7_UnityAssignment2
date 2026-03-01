@@ -59,7 +59,7 @@ public class ValueSingleton : MonoBehaviour
     IEnumerator ISlowTime()
     {
         isSlow = true;
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSecondsRealtime(10f);
         isSlow = false;
     }
     
@@ -72,7 +72,7 @@ public class ValueSingleton : MonoBehaviour
     IEnumerator IBoostTime()
     {
         isBoost = true;
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSecondsRealtime(10f);
         isBoost = false;
     }
     

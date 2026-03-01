@@ -255,7 +255,8 @@ public class Enemy : MonoBehaviour
     {
         while (enemyType != EnemyType.Done)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSecondsRealtime(5f);
+
 
             int k = Random.Range(0, EnemySpawner.Instance.enemies.Length - 1);
             int dir = Random.Range(0, 4);

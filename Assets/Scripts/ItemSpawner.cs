@@ -15,10 +15,10 @@ public class ItemSpawner : MonoBehaviour
 
     IEnumerator SpawnItem()
     {
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSecondsRealtime(6f);
         Vector3 randomPos = new Vector3(Random.Range(80f, 53f), 4.8f, Random.Range(43f, 15f));
         GameObject obj = Instantiate(itemPrefab,randomPos,Quaternion.identity);
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSecondsRealtime(6f);
         StartCoroutine(SpawnItem());
     }
     
