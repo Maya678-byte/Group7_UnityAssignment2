@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
         Normal,
         Evasive,
         Aggressive,
+        ZigZag,
         Boss,
         Done
     }
@@ -27,6 +28,17 @@ public class Enemy : MonoBehaviour
     public float detectRange = 8f;
     public float goalReachDistance = 1f;
     public bool isPoint;
+
+    public float aggressiveChargeRange = 8f;
+    public float aggressiveChargeImpulse = 35f;
+    public float aggressiveChargeCooldown = 2f;
+    private float lastAggressiveChargeTime = -99f;
+
+    public float aggressiveKnockbackForce = 25f;
+    public float aggressiveUpwardForce = 5f;
+
+    public float zigZagFrequency = 3f;   
+    public float zigZagAmplitude = 0.7f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -113,6 +125,9 @@ public class Enemy : MonoBehaviour
             case EnemyType.Boss:
                 DoBoss();
                 break;
+            case EnemyType.ZigZag:     
+                DoZigZag();
+                break;
         }
     }
     
@@ -169,6 +184,7 @@ public class Enemy : MonoBehaviour
 
         Vector3 toPlayer = (player.position - transform.position);
         toPlayer.y = 0f;
+        float distanceToPlayer = toPlayer.magnitude;
 
         if (toPlayer.magnitude < 0.5f)
         {
@@ -177,12 +193,45 @@ public class Enemy : MonoBehaviour
         }
 
         toPlayer.Normalize();
+
+        bool canCharge = Time.time > lastAggressiveChargeTime + aggressiveChargeCooldown;
+
+        if (distanceToPlayer < aggressiveChargeRange && canCharge)
+        {
+            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+            rb.AddForce(toPlayer * aggressiveChargeImpulse, ForceMode.Impulse);
+            lastAggressiveChargeTime = Time.time;
+
+            return;
+        }
         Vector3 targetVel = toPlayer * moveSpeed * 1.2f;
 
         rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
     }
-    
-    
+
+    void DoZigZag()
+    {
+        rb.linearDamping = moveDrag;
+
+        Vector3 toGoal = (goal.position - transform.position);
+        toGoal.y = 0f;
+
+      
+        Vector3 forwardDir = toGoal.normalized;
+
+        
+        Vector3 rightDir = new Vector3(forwardDir.z, 0f, -forwardDir.x);
+
+      
+        float offset = Mathf.Sin(Time.time * zigZagFrequency) * zigZagAmplitude;
+
+     
+        Vector3 finalDir = (forwardDir + rightDir * offset).normalized;
+
+        Vector3 targetVel = finalDir * moveSpeed;
+        rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
+    }
+
     void DoBoss()
     {
         rb.linearDamping = moveDrag;
