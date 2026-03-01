@@ -81,6 +81,7 @@ public class Enemy : MonoBehaviour
         {
             enemyType = EnemyType.Done;
             ValueSingleton.Instance.health -= 1;
+            AudioSingleton.Instance.PlayGoal();
 
             if (isPoint)
             {
