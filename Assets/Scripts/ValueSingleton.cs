@@ -46,7 +46,6 @@ public class ValueSingleton : MonoBehaviour
         if (health <= 0)
         {
             GameUI.Instance.GameOver.SetActive(true);
-            AudioSingleton.Instance.PlayGameOver();
             GameUI.Instance.InGame.SetActive(false);
         }
     }

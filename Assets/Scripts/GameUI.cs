@@ -45,9 +45,14 @@ public class GameUI : MonoBehaviour
     {
         if (GameOver.activeSelf)
         {
+            if (Player.GetComponent<PlayerMovement>().enabled == true)
+            {
+                AudioSingleton.Instance.PlayGameOver();
+            }
             FreeLook.SetActive(false);
             Player.GetComponent<PlayerMovement>().enabled = false;
             Cursor.lockState = CursorLockMode.None;
+            
         } else if (PauseUI.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
