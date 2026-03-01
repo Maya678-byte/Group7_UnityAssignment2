@@ -7,21 +7,29 @@ public class SpawnManagerX : MonoBehaviour
     public GameObject[] enemyPrefab;
     public GameObject powerupPrefab;
 
-    public GameObject bossPrefab;     // assign BossEnemy prefab
-    public int bossWaveInterval = 3;  // boss appears every 3 waves 
+    public GameObject bossPrefab;     
+    public int bossWaveInterval = 3;  
 
     private float spawnRangeX = 10;
-    private float spawnZMin = 15; // set min spawn Z
-    private float spawnZMax = 25; // set max spawn Z
+    private float spawnZMin = 15;
+    private float spawnZMax = 25;
 
     public int enemyCount;
-    public int waveCount = 1;    // starting wave logical index
+    public int waveCount = 1;    
     public float enemySpeed = 25;
 
     public GameObject player;
 
-    // Ensure waveCount never starts at 0 from Inspector override
-    // First wave would start during runtime and we don't want that
+    // Score tracking
+    public int goalsMade = 0;
+    public int goalsConceded = 0;
+    public int maxGoals = 5;
+
+    public int waveNumber
+    {
+        get { return waveCount; }
+    }
+
     void Start()
     {
         if (waveCount < 1)
@@ -30,7 +38,6 @@ public class SpawnManagerX : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
@@ -41,7 +48,16 @@ public class SpawnManagerX : MonoBehaviour
         }
     }
 
-    // Generate random spawn position for powerups and enemy balls
+    public void AddGoalMade()
+    {
+        goalsMade++;
+    }
+
+    public void AddGoalConceded()
+    {
+        goalsConceded++;
+    }
+
     Vector3 GenerateSpawnPosition()
     {
         float xPos = Random.Range(-spawnRangeX, spawnRangeX);
@@ -51,9 +67,8 @@ public class SpawnManagerX : MonoBehaviour
 
     void SpawnEnemyWave(int enemiesToSpawn)
     {
-        Vector3 powerupSpawnOffset = new Vector3(0, 0, -15); // make powerups spawn at player end
+        Vector3 powerupSpawnOffset = new Vector3(0, 0, -15);
 
-        // If no powerups remain, spawn a powerup
         if (GameObject.FindGameObjectsWithTag("Powerup").Length == 0)
         {
             Instantiate(
@@ -63,19 +78,11 @@ public class SpawnManagerX : MonoBehaviour
             );
         }
 
-        // Boss wave check
-        // Only spawn boss if:
-        // we have a bossPrefab
-        // interval is valid
-        // and we've reached at least that wave (so no boss on wave 1/2)
         if (bossPrefab != null &&
             bossWaveInterval > 0 &&
             waveCount >= bossWaveInterval &&
             waveCount % bossWaveInterval == 0)
         {
-            Debug.Log($"BOSS WAVE! waveCount = {waveCount}");
-
-            // Choose boss spawn position 
             Vector3 bossSpawnPos = GenerateSpawnPosition();
             Instantiate(
                 bossPrefab,
@@ -85,24 +92,13 @@ public class SpawnManagerX : MonoBehaviour
 
             waveCount++;
             enemySpeed = waveCount * 25;
-            ResetPlayerPosition(); // put player back at start
-            return; // skip spawning regular enemies this wave
+            ResetPlayerPosition();
+            return;
         }
 
-        // Normal enemy spawning
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            int enemyIndex;
-
-            if (i == 0)
-            {
-                // Always spawn one normal enemy
-                enemyIndex = 0;
-            }
-            else
-            {
-                enemyIndex = Random.Range(0, enemyPrefab.Length);
-            }
+            int enemyIndex = (i == 0) ? 0 : Random.Range(0, enemyPrefab.Length);
 
             Instantiate(
                 enemyPrefab[enemyIndex],
@@ -113,10 +109,9 @@ public class SpawnManagerX : MonoBehaviour
 
         waveCount++;
         enemySpeed = waveCount * 25;
-        ResetPlayerPosition(); // put player back at start
+        ResetPlayerPosition();
     }
 
-    // Move player back to position in front of own goal
     void ResetPlayerPosition()
     {
         player.transform.position = new Vector3(0, 1, -7);
