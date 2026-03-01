@@ -1,6 +1,6 @@
 -Maya: Completed the 7 unity challenges, worked on all different enemies, boost power up, enemy spawner
 
--Abdulla: player movement, camera control, enemy spawner, main menu, slow down power up, Shader Editing, Volume, and settings integration. Player Customization.
+-Abdulla: player movement,level design, camera control, enemy spawner, main menu, slow down power up, Shader Editing, Volume, and settings integration. Player Customization.
 
 -Wahda: pause menu, main menu, audio, customization
 
