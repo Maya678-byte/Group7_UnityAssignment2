@@ -29,6 +29,9 @@ public class Enemy : MonoBehaviour
     public float aggressiveChargeImpulse = 35f;   
     public float aggressiveChargeCooldown = 2f;   
     private float lastAggressiveChargeTime = -99f;
+
+    public float aggressiveKnockbackForce = 25f;  
+    public float aggressiveUpwardForce = 5f;      
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -182,6 +185,7 @@ public class Enemy : MonoBehaviour
     }
     public void ApplyKnockback(Vector3 force, float duration)
     {
+        
         if (rb == null) return;
 
         isKnockedBack = true;
@@ -193,5 +197,31 @@ public class Enemy : MonoBehaviour
 
         rb.AddForce(force, ForceMode.Impulse);
     }
-    
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (enemyType == EnemyType.Aggressive &&
+            other.gameObject.CompareTag("Player"))
+        {
+            Rigidbody playerRb = other.gameObject.GetComponent<Rigidbody>();
+
+            if (playerRb != null)
+            {
+                // Direction from enemy to player
+                Vector3 knockDir = other.transform.position - transform.position;
+                knockDir.y = 0f;
+                knockDir.Normalize();
+
+                float aggressiveKnockbackForce = 50f;  // adjust strength
+                float aggressiveUpwardForce = 10f;      // small pop upward
+
+                Vector3 knockForce =
+                    knockDir * aggressiveKnockbackForce +
+                    Vector3.up * aggressiveUpwardForce;
+
+                playerRb.AddForce(knockForce, ForceMode.Impulse);
+            }
+        }
+    }
+
 }
