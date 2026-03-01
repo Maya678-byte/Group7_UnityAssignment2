@@ -198,13 +198,7 @@ public class Enemy : MonoBehaviour
 
         Vector3 toGoal = (goal.position - transform.position);
         toGoal.y = 0f;
-
-        //float distToGoal = toGoal.magnitude;
-        //if (distToGoal <= goalReachDistance)
-        //{
-        //    rb.linearVelocity = Vector3.zero;
-        //    return;
-        //}    
+   
         Vector3 forwardDir = toGoal.normalized;
 
         Vector3 rightDir = new Vector3(forwardDir.z, 0f, -forwardDir.x);
