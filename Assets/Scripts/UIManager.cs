@@ -22,14 +22,14 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Main();
-        //AudioSingleton.Instance.PlayMenu();
+        AudioSingleton.Instance.PlayMenu();
         Screen.SetResolution(1920, 1080, true);
     }
     
 
     public void Play()
     {
-        //AudioSingleton.Instance.PlayButton();
+        AudioSingleton.Instance.PlayButton();
         TransitionManager.Instance().Transition(SceneManager.GetActiveScene().buildIndex+1,transition, startDelay);
     }
 
@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
         camera.GetComponent<MenuCamera>().GoToMenu();
         if (CustomMenu.activeSelf || settingsMenu.activeSelf || htpMenu.activeSelf)
         {
-            //AudioSingleton.Instance.PlayButton();
+            AudioSingleton.Instance.PlayButton();
         }
         back.SetActive(false);
         mainMenu.SetActive(true);
@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
 
     public void Settings()
     {
-       // AudioSingleton.Instance.PlayButton();
+       AudioSingleton.Instance.PlayButton();
         
         htpMenu.SetActive(false);
         settingsMenu.SetActive(true);
@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
     
     public void HTP()
     {
-        //AudioSingleton.Instance.PlayButton();
+        AudioSingleton.Instance.PlayButton();
         
         htpMenu.SetActive(true);
         settingsMenu.SetActive(false);
@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
         back.SetActive(true);
 
         
-        //AudioSingleton.Instance.PlayButton();
+        AudioSingleton.Instance.PlayButton();
 
         mainMenu.SetActive(false);
         htpMenu.SetActive(false);

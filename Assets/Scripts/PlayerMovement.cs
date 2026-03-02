@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         ValueSingleton.Instance.health = 3;
         ValueSingleton.Instance.isBoost = false;
         ValueSingleton.Instance.isSlow = false;
+        AudioSingleton.Instance.PlayNormal();
     }
 
     void Update()
@@ -110,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
             v.y = 0f;
             playerRb.linearVelocity = v;
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            AudioSingleton.Instance.PlayJump();
             jumpPressed = false;
         }
         
@@ -128,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Smash()
     {
+        AudioSingleton.Instance.PlaySmash();
         GameObject p = Instantiate(particle, transform.position - new Vector3(0,0.2f,0), Quaternion.Euler(90,0,0));
         KnockbackEnemies();
     }
