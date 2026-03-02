@@ -9,6 +9,7 @@ namespace TMPro.Examples
     {
         public enum CameraModes { Follow, Isometric, Free }
 
+        private const string SensKey = "camera_sensitivity";
         private Transform cameraTransform;
         private Transform dummyTarget;
 
@@ -49,7 +50,12 @@ namespace TMPro.Examples
         private const string event_SmoothingValue = "Slider - Smoothing Value";
         private const string event_FollowDistance = "Slider - Camera Zoom";
 
-
+        public void SetSensitivity(float value)
+        {
+            MoveSensitivity = value;
+            PlayerPrefs.SetFloat(SensKey, value);
+            PlayerPrefs.Save();
+        }
         void Awake()
         {
             if (QualitySettings.vSyncCount > 0)
@@ -62,6 +68,8 @@ namespace TMPro.Examples
 
             cameraTransform = transform;
             previousSmoothing = MovementSmoothing;
+
+            MoveSensitivity = PlayerPrefs.GetFloat(SensKey, MoveSensitivity);
         }
 
 
