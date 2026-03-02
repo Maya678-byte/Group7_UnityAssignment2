@@ -106,18 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b745ba3466aec40a39ebf444487ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  enemyType: 4
+  enemyType: 3
   moveSpeed: 2
   detectRange: 2
   goalReachDistance: 0.1
-  isPoint: 0
-  aggressiveChargeRange: 8
-  aggressiveChargeImpulse: 35
-  aggressiveChargeCooldown: 2
-  aggressiveKnockbackForce: 25
-  aggressiveUpwardForce: 5
-  zigZagFrequency: 3
-  zigZagAmplitude: 0.7
 --- !u!54 &-2457512617944952269
 Rigidbody:
   m_ObjectHideFlags: 0

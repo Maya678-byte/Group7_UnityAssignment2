@@ -10,15 +10,17 @@ public class AudioSingleton : MonoBehaviour
     public AudioSource jump;
     public AudioSource pause;
     public AudioSource unpause;
-    
+    public AudioSource win;
+    public AudioSource coin;
+
+
+
     public AudioSource button;
+
     public AudioSource menu;
-    public AudioSource normal;
-    
-    public AudioSource goal;
-    public AudioSource gameover;
-    public AudioSource smash;
-    
+    public AudioSource wood;
+    public AudioSource cave;
+    public AudioSource snow;
     private void Awake()
     {
         volume = 0.5f;
@@ -35,19 +37,17 @@ public class AudioSingleton : MonoBehaviour
     public void ChangeVolume(Slider slider)
     {
         volume = slider.value;
-        
         jump.volume = volume;
+        
+        coin.volume = volume;
+        win.volume = volume;
         pause.volume = volume;
         unpause.volume = volume;
-        
         button.volume = volume;
         menu.volume = volume;
-        normal.volume = volume;
-        
-        goal.volume = volume;
-        gameover.volume = volume;
-        smash.volume = volume;
-       
+        wood.volume = volume;
+        cave.volume = volume;
+        snow.volume = volume;
     }
 
     
@@ -58,6 +58,17 @@ public class AudioSingleton : MonoBehaviour
         jump.Play();
     }
     
+    public void PlayCoin()
+    {
+        coin.volume = volume;
+        coin.Play();
+    }
+
+    public void PlayWin()
+    {
+        win.volume = volume;
+        win.Play();
+    }
 
     public void PlayPause()
     {
@@ -78,42 +89,24 @@ public class AudioSingleton : MonoBehaviour
 
     public void PlayMenu()
     {
-        PauseMusic();
         menu.volume = volume;
         menu.loop = true;
         menu.Play();
     }
 
-    public void PlayNormal()
+    public void PlayWood()
     {
-        PauseMusic();
-        normal.volume = volume;
-        normal.loop = true;
-        normal.Play();
-    }
-
-    public void PlayGoal()
-    {
-        goal.volume = volume;
-        goal.Play();
-    }
-    
-    public void PlayGameOver()
-    {
-        gameover.volume = volume;
-        gameover.Play();
-    }
-
-    public void PlaySmash()
-    {
-        smash.volume = volume;
-        smash.Play();
+        wood.volume = volume;
+        wood.loop = true;
+        wood.Play();
     }
 
 
     public void PauseMusic()
     {
-        normal.Stop();
+        snow.Stop();
+        wood.Stop();
+        cave.Stop();
         menu.Stop();
     }
 }
