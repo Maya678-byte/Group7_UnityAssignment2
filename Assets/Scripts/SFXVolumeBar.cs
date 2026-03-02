@@ -1,14 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VolumeBar : MonoBehaviour
+public class SFXVolumeBar : MonoBehaviour
 {
     public Slider slider;
 
     private void Start()
     {
-        // set initial value from saved prefs
-        slider.value = PlayerPrefs.GetFloat("music_volume", 0.5f);
+        slider.value = PlayerPrefs.GetFloat("sfx_volume", 0.5f);
         slider.onValueChanged.AddListener(OnValueChanged);
     }
 
@@ -20,6 +19,6 @@ public class VolumeBar : MonoBehaviour
     private void OnValueChanged(float value)
     {
         if (AudioSingleton.Instance != null)
-            AudioSingleton.Instance.SetMusicVolume(value);
+            AudioSingleton.Instance.SetSFXVolume(value);
     }
 }
